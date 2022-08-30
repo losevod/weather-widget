@@ -38,7 +38,6 @@ export const weatherStore = defineStore('weather', {
       },
       checkLocalStorage() {
          const savedOrder: string | null = localStorage.getItem('savedOrder')
-         console.log(savedOrder)
          if (savedOrder) {
             this.$reset()
             const apiKey = localStorage.getItem('apiKey')
