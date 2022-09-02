@@ -5,7 +5,7 @@
       </div>
       <draggable 
         v-model="weathers" 
-        group="locations" 
+        group="weathers" 
         @start="drag=true" 
         @end="updateWeathers" 
         item-key="id">
@@ -33,7 +33,7 @@
 <script lang="ts">
    import { Weather } from '@/models/weather';
    import { weatherStore } from '@/stores/weatherStore';
-   import { defineComponent, ref, Ref } from 'vue';
+   import { computed, defineComponent, ref, Ref, watch } from 'vue';
    import draggable from 'vuedraggable';
    
    export default defineComponent({
@@ -48,11 +48,16 @@
          const cityName: Ref<string> = ref('') 
          const apiKey: string | null = localStorage.getItem('apiKey') 
          const weathers: Ref<Weather[]> = ref(store.weathers)
- 
-          function updateWeathers() {
-            drag.value = false
-            store.updateWeathers(weathers.value)
-          }
+         const computedWeathers: Ref<Weather[]> = computed(() => store.weathers)
+
+         watch(computedWeathers, value => {
+          weathers.value = value
+         })
+
+         function updateWeathers() {
+          drag.value = false
+          store.updateWeathers(weathers.value)
+         }
 
          function deleteLocation(element: Weather): void {
             store.deleteWeathers(element)
