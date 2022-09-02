@@ -35,11 +35,13 @@ export default defineComponent({
     const isMainView: Ref<boolean> = ref(true)
     const store = weatherStore()
     const weathers: Ref<Weather[]> = computed(() => store.weathers)
-    const isSavedOrder = ref(localStorage.getItem('savedOrder') ? true : false)
+    const isSavedOrder: Ref<boolean> = ref(localStorage.getItem('savedOrder') ? true : false)
+
 
     onMounted(() => {
       store.checkLocalStorage()
     })
+
     function configureWidget() {
       if (!isSavedOrder.value)
         isMainView.value = !isMainView.value
@@ -54,6 +56,7 @@ export default defineComponent({
           arrayOfOrder+=element.name
       }) 
       localStorage.setItem('savedOrder', arrayOfOrder)
+      if (arrayOfOrder !== '') isSavedOrder.value = true
       isMainView.value = true
     }
 
