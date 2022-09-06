@@ -5,11 +5,11 @@ import axios, {
 import { ApiResult } from '@/models/common'
 
 const configuration: AxiosRequestConfig = {
-   baseURL: 'https://api.openweathermap.org/data/2.5',
+   baseURL: process.env.VUE_APP_BASE_URL,
    responseType: 'json'
 }
 
-localStorage.setItem('apiKey', '9553b20897172e725cd19ee8b0102a27')
+localStorage.setItem('apiKey', process.env.VUE_APP_API_KEY)
 
 class Api {
    private axios: AxiosInstance;
